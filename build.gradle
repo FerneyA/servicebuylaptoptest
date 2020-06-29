@@ -1,0 +1,61 @@
+defaultTasks 'clean','test','aggregate'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:2.2.0"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:latest.release"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'net.serenity-bdd.aggregator'
+apply from: "$rootDir/gradle/libraries.gradle"
+
+sourceCompatibility = 1.8
+
+configurations.all {
+    resolutionStrategy {
+        force "io.cucumber:cucumber-core:4.2.0"
+    }
+}
+
+dependencies {
+    compile libs.test.jackson.core,
+            libs.test.jackson.annotation,
+            libs.test.jackson.databind,
+            libs.test.serenity.core,
+            libs.test.serenity.restAssured,
+            libs.test.serenity.cucumbercore,
+            libs.test.serenity.cucumber,
+            libs.test.serenity.cucumberjunit
+
+    testCompile libs.test.junit,
+            libs.test.slf4jApi,
+            libs.test.logback
+
+    testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+    compile group: 'net.serenity-bdd', name: 'serenity-screenplay-rest', version: '1.9.27'
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+}
+
+gradle.startParameter.continueOnFailure = true
+
+test.finalizedBy(aggregate)
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"

@@ -1,0 +1,30 @@
+ext {
+    slf4jVersion = '1.7.7'
+    serenityCoreVersion = '2.1.8'
+    serenityRestVersion = '2.1.6'
+    serenityCucumberVersion = '1.0.5'
+    cucumberVersion = '4.2.0'
+    jacksonVersion = '2.9.5'
+    junitVersion='4.12'
+    logbackVersion='1.2.3'
+
+    libs = [
+            test: [
+                    serenity: [
+                            core         : "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
+                            restAssured  : "net.serenity-bdd:serenity-rest-assured:${serenityRestVersion}",
+                            cucumber     : "net.serenity-bdd:serenity-cucumber4:${serenityCucumberVersion}",
+                            cucumbercore : "io.cucumber:cucumber-core:${cucumberVersion}",
+                            cucumberjunit: "io.cucumber:cucumber-junit:${cucumberVersion}"
+                    ],
+                    jackson : [
+                            core      : "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}",
+                            annotation: "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}",
+                            databind  : "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+                    ],
+                    slf4jApi: "org.slf4j:slf4j-api:$slf4jVersion",
+                    logback: "ch.qos.logback:logback-classic:${logbackVersion}",
+                    junit: "junit:junit:${junitVersion}"
+            ]
+    ]
+}
